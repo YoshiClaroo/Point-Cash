@@ -310,9 +310,17 @@
 
         // Función para mostrar un anuncio
         function mostrarAnuncio() {
-            show_9120013().then(() => {
-                alert('¡Has visto un anuncio!');
-            });
+            if (typeof show_9120013 === 'function') {
+                show_9120013().then(() => {
+                    alert('¡Has visto un anuncio!');
+                }).catch((error) => {
+                    console.error('Error al mostrar el anuncio:', error);
+                    alert('Error al cargar el anuncio. Inténtalo de nuevo.');
+                });
+            } else {
+                console.error('show_9120013 no está definido.');
+                alert('Error: No se pudo cargar el SDK de anuncios.');
+            }
         }
 
         // Función para ver un anuncio (simulado)
