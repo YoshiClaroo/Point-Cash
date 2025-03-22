@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agarra el Objeto Brillante</title>
+    <!-- Script para anuncios recompensados -->
+    <script src='//whephiwums.com/sdk.js' data-zone='9120013' data-sdk='show_9120013'></script>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Contenedor de puntos */
+        #puntos {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        /* Contenedor del juego */
+        #juego {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: none; /* Oculto inicialmente */
+        }
+
+        /* Estilos de los objetos brillantes */
+        .objeto {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+            animation: brillo 1.5s infinite alternate;
+        }
+
+        @keyframes brillo {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* Submenú inferior */
+        #submenu {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #222;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Botones del submenú */
+        #submenu button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #submenu button:hover {
+            background-color: #666;
+        }
+
+        /* Vista de reclamar puntos */
+        #vista-reclamar {
+            display: none; /* Oculto inicialmente */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Vista de Wallet */
+        #vista-wallet {
+            display: none; /* Oculto inicialmente */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Sección de Watch Video y Open Link */
+        .seccion-reclamar {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 10px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .seccion-reclamar h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+
+        .seccion-reclamar button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .seccion-reclamar button:hover {
+            background-color: #666;
+        }
+
+        .seccion-reclamar p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .seccion-reclamar .puntos-extra {
+            font-size: 12px;
+            color: #0f0;
+            margin-top: 5px;
+        }
+
+        /* Estilos para Wallet */
+        #wallet-info {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 10px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        #wallet-info h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+
+        #wallet-info button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #wallet-info button:disabled {
+            background-color: #777;
+            cursor: not-allowed;
+        }
+
+        #wallet-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* Botón de Reclamar */
+        #reclamar-usd {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contador de puntos -->
+    <div id="puntos">Puntos: 0</div>
+
+    <!-- Área del juego -->
+    <div id="juego"></div>
+
+    <!-- Vista de reclamar puntos -->
+    <div id="vista-reclamar">
+        <!-- Watch Video -->
+        <div class="seccion-reclamar">
+            <h2>📺 Watch Video <span id="watch-count">0/70</span></h2>
+            <button onclick="verAnuncio()">
+                Ver Anuncio
+                <span>➜</span>
+            </button>
+            <p class="puntos-extra">+50</p>
+        </div>
+
+        <!-- Open Link -->
+        <div class="seccion-reclamar">
+            <h2>🔗 Open Link <span id="link-count">0/50</span></h2>
+            <button onclick="abrirLink()">
+                Abrir Link
+                <span>➜</span>
+            </button>
+            <p class="puntos-extra">+30</p>
+        </div>
+    </div>
+
+    <!-- Vista de Wallet -->
+    <div id="vista-wallet">
+        <div id="wallet-info">
+            <h2>💼 Wallet</h2>
+            <p>Puntos: <span id="wallet-puntos">0</span></p>
+            <p>USD: $<span id="wallet-usd">0.00</span></p>
+            <button id="reclamar-usd" onclick="reclamarUSD()" disabled>Reclamar USD</button>
+        </div>
+    </div>
+
+    <!-- Submenú inferior -->
+    <div id="submenu">
+        <button onclick="irAlJuego()">🎮 Jugar</button>
+        <button onclick="irAReclamar()">💰 Reclamar</button>
+        <button onclick="irAWallet()">💼 Wallet</button>
+    </div>
+
+    <script>
+        // Variables del juego
+        let puntos = localStorage.getItem('puntos') ? parseInt(localStorage.getItem('puntos')) : 0;
+        let ultimaFecha = localStorage.getItem('ultimaFecha') ? new Date(localStorage.getItem('ultimaFecha')) : null;
+        let watchCount = localStorage.getItem('watchCount') ? parseInt(localStorage.getItem('watchCount')) : 0;
+        let linkCount = localStorage.getItem('linkCount') ? parseInt(localStorage.getItem('linkCount')) : 0;
+        let usd = localStorage.getItem('usd') ? parseFloat(localStorage.getItem('usd')) : 0.00;
+        let objetosAgarrados = 0; // Contador de objetos agarrados
+        let intervaloJuego;
+        const juego = document.getElementById('juego');
+        const vistaReclamar = document.getElementById('vista-reclamar');
+        const vistaWallet = document.getElementById('vista-wallet');
+        const botonReclamar = document.getElementById('reclamar-usd');
+
+        // Mostrar puntos iniciales
+        actualizarPuntos();
+        document.getElementById('watch-count').innerText = `${watchCount}/70`;
+        document.getElementById('link-count').innerText = `${linkCount}/50`;
+        actualizarWallet();
+
+        // Función para crear un objeto brillante
+        function crearObjeto() {
+            const objeto = document.createElement('div');
+            objeto.className = 'objeto';
+            objeto.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            objeto.style.left = `${Math.random() * (window.innerWidth - 50)}px`;
+            objeto.style.top = `${Math.random() * (window.innerHeight - 150)}px`; // Ajuste para el submenú
+
+            // Hacer que el objeto desaparezca después de 1 segundo
+            setTimeout(() => {
+                if (objeto.parentElement) {
+                    objeto.remove();
+                }
+            }, 1000); // 1 segundo para agarrar el objeto
+
+            // Sumar puntos al hacer clic en el objeto
+            objeto.addEventListener('click', () => {
+                puntos += 5; // Cada objeto da 5 puntos
+                objetosAgarrados += 1;
+                actualizarPuntos();
+                convertirPuntosAUSD(); // Convertir automáticamente
+                objeto.remove();
+
+                // Mostrar anuncio cada 10 objetos agarrados
+                if (objetosAgarrados >= 10) {
+                    objetosAgarrados = 0; // Reiniciar contador
+                    mostrarAnuncio();
+                }
+            });
+
+            juego.appendChild(objeto);
+        }
+
+        // Función para mostrar un anuncio
+        function mostrarAnuncio() {
+            show_9120013().then(() => {
+                alert('¡Has visto un anuncio!');
+            });
+        }
+
+        // Función para ver un anuncio (simulado)
+        function verAnuncio() {
+            if (watchCount < 70) {
+                mostrarAnuncio();
+                puntos += 50;
+                watchCount += 1;
+                actualizarPuntos();
+                actualizarContadores();
+                convertirPuntosAUSD(); // Convertir automáticamente
+            } else {
+                alert("Límite diario alcanzado.");
+            }
+        }
+
+        // Función para abrir el link
+        function abrirLink() {
+            window.location.href = "https://whoushex.top/4/9120046";
+        }
+
+        // Función para actualizar y guardar puntos
+        function actualizarPuntos() {
+            document.getElementById('puntos').innerText = `Puntos: ${puntos}`;
+            document.getElementById('wallet-puntos').innerText = puntos;
+            localStorage.setItem('puntos', puntos);
+        }
+
+        // Función para actualizar contadores
+        function actualizarContadores() {
+            document.getElementById('watch-count').innerText = `${watchCount}/70`;
+            document.getElementById('link-count').innerText = `${linkCount}/50`;
+            localStorage.setItem('watchCount', watchCount);
+            localStorage.setItem('linkCount', linkCount);
+        }
+
+        // Función para actualizar Wallet
+        function actualizarWallet() {
+            document.getElementById('wallet-usd').innerText = usd.toFixed(2);
+            localStorage.setItem('usd', usd);
+
+            // Activar o desactivar el botón de Reclamar
+            if (usd >= 1.00) {
+                botonReclamar.disabled = false;
+            } else {
+                botonReclamar.disabled = true;
+            }
+        }
+
+        // Función para convertir puntos a USD automáticamente
+        function convertirPuntosAUSD() {
+            while (puntos >= 1000) {
+                usd += 0.01;
+                puntos -= 1000;
+            }
+            actualizarPuntos();
+            actualizarWallet();
+        }
+
+        // Función para reclamar USD
+        function reclamarUSD() {
+            if (usd >= 1.00) {
+                // Aquí puedes cambiar la URL por la que desees
+                window.location.href = "https://ejemplo.com/reclamar";
+            } else {
+                alert("Necesitas al menos $1 USD para reclamar.");
+            }
+        }
+
+        // Función para reiniciar contadores diarios
+        function reiniciarContadoresDiarios() {
+            const hoy = new Date();
+            if (!ultimaFecha || hoy.toDateString() !== ultimaFecha.toDateString()) {
+                watchCount = 0;
+                linkCount = 0;
+                ultimaFecha = hoy;
+                localStorage.setItem('watchCount', watchCount);
+                localStorage.setItem('linkCount', linkCount);
+                localStorage.setItem('ultimaFecha', ultimaFecha);
+                actualizarContadores();
+            }
+        }
+
+        // Función para ir al juego
+        function irAlJuego() {
+            juego.style.display = 'block';
+            vistaReclamar.style.display = 'none';
+            vistaWallet.style.display = 'none';
+            if (!intervaloJuego) {
+                intervaloJuego = setInterval(crearObjeto, 1000); // Crear objetos cada 1 segundo
+            }
+        }
+
+        // Función para ir a reclamar puntos
+        function irAReclamar() {
+            juego.style.display = 'none';
+            vistaReclamar.style.display = 'flex';
+            vistaWallet.style.display = 'none';
+            clearInterval(intervaloJuego);
+            intervaloJuego = null;
+        }
+
+        // Función para ir a Wallet
+        function irAWallet() {
+            juego.style.display = 'none';
+            vistaReclamar.style.display = 'none';
+            vistaWallet.style.display = 'flex';
+            clearInterval(intervaloJuego);
+            intervaloJuego = null;
+        }
+
+        // Iniciar el juego automáticamente
+        irAlJuego();
+
+        // Reiniciar contadores diarios al cargar la página
+        reiniciarContadoresDiarios();
+    </script>
+</body>
+</html>
