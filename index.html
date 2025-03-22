@@ -293,16 +293,17 @@
             // Sumar puntos al hacer clic en el objeto
             objeto.addEventListener('click', () => {
                 puntos += 5; // Cada objeto da 5 puntos
-                objetosAgarrados += 1;
+                objetosAgarrados += 1; // Incrementar el contador de objetos agarrados
                 actualizarPuntos();
                 convertirPuntosAUSD(); // Convertir automáticamente
-                objeto.remove();
 
-                // Mostrar anuncio cada 10 objetos agarrados
+                // Mostrar anuncio después de 10 objetos agarrados
                 if (objetosAgarrados >= 10) {
-                    objetosAgarrados = 0; // Reiniciar contador
                     mostrarAnuncio();
+                    objetosAgarrados = 0; // Reiniciar contador
                 }
+
+                objeto.remove();
             });
 
             juego.appendChild(objeto);
@@ -312,21 +313,21 @@
         function mostrarAnuncio() {
             show_9120716().then(() => {
                 alert('¡Has visto un anuncio!');
+                puntos += 50; // Recompensar puntos por ver el anuncio
+                actualizarPuntos();
+                convertirPuntosAUSD(); // Convertir automáticamente
             }).catch((error) => {
                 console.error('Error al mostrar el anuncio:', error);
                 alert('Error al cargar el anuncio. Inténtalo de nuevo.');
             });
         }
 
-        // Función para ver un anuncio (actualizada)
+        // Función para ver un anuncio (actualizada para usar el mismo anuncio)
         function verAnuncio() {
             if (watchCount < 70) {
                 mostrarAnuncio();
-                puntos += 50;
                 watchCount += 1;
-                actualizarPuntos();
                 actualizarContadores();
-                convertirPuntosAUSD(); // Convertir automáticamente
             } else {
                 alert("Límite diario alcanzado.");
             }
@@ -335,8 +336,8 @@
         // Función para abrir el anuncio (actualizada)
         function abrirLink() {
             show_9120716('pop').then(() => {
-                // Código para recompensar al usuario aquí
-                alert('¡Has visto el anuncio!');
+                alert('¡Has visto el anuncio desde Open Link!');
+                // Código para recompensar al usuario aquí, si es necesario
             }).catch(e => {
                 console.error('Error al mostrar el anuncio:', e);
                 alert('Error al cargar el anuncio. Inténtalo de nuevo.');
