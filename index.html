@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agarra el Objeto Brillante</title>
     <!-- Script para anuncios recompensados -->
-    <script src='//whephiwums.com/sdk.js' data-zone='9120013' data-sdk='show_9120013'></script>
+    <script src='//whephiwums.com/sdk.js' data-zone='9120716' data-sdk='show_9120716'></script>
     <style>
         /* Estilos generales */
         body {
@@ -232,7 +232,7 @@
         <div class="seccion-reclamar">
             <h2>🔗 Open Link <span id="link-count">0/50</span></h2>
             <button onclick="abrirLink()">
-                Abrir Link
+                Abrir Anuncio
                 <span>➜</span>
             </button>
             <p class="puntos-extra">+30</p>
@@ -310,20 +310,15 @@
 
         // Función para mostrar un anuncio
         function mostrarAnuncio() {
-            if (typeof show_9120013 === 'function') {
-                show_9120013().then(() => {
-                    alert('¡Has visto un anuncio!');
-                }).catch((error) => {
-                    console.error('Error al mostrar el anuncio:', error);
-                    alert('Error al cargar el anuncio. Inténtalo de nuevo.');
-                });
-            } else {
-                console.error('show_9120013 no está definido.');
-                alert('Error: No se pudo cargar el SDK de anuncios.');
-            }
+            show_9120716().then(() => {
+                alert('¡Has visto un anuncio!');
+            }).catch((error) => {
+                console.error('Error al mostrar el anuncio:', error);
+                alert('Error al cargar el anuncio. Inténtalo de nuevo.');
+            });
         }
 
-        // Función para ver un anuncio (simulado)
+        // Función para ver un anuncio (actualizada)
         function verAnuncio() {
             if (watchCount < 70) {
                 mostrarAnuncio();
@@ -337,9 +332,15 @@
             }
         }
 
-        // Función para abrir el link en una nueva pestaña
+        // Función para abrir el anuncio (actualizada)
         function abrirLink() {
-            window.open("https://whoushex.top/4/9120046", "_blank");
+            show_9120716('pop').then(() => {
+                // Código para recompensar al usuario aquí
+                alert('¡Has visto el anuncio!');
+            }).catch(e => {
+                console.error('Error al mostrar el anuncio:', e);
+                alert('Error al cargar el anuncio. Inténtalo de nuevo.');
+            });
         }
 
         // Función para actualizar y guardar puntos
