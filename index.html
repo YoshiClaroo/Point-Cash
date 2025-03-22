@@ -11,9 +11,9 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-color: black;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -22,8 +22,10 @@
 
         /* Contenedor de puntos */
         #puntos {
-            font-size: 24px;
+            font-size: 28px;
             margin: 20px 0;
+            color: #00FF7F;
+            text-shadow: 0 0 10px #00FF7F;
         }
 
         /* Contenedor del juego */
@@ -41,7 +43,8 @@
             height: 50px;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+            background: radial-gradient(circle, #8A2BE2, #00BFFF);
+            box-shadow: 0 0 20px #8A2BE2, 0 0 40px #00BFFF;
             animation: brillo 1.5s infinite alternate;
         }
 
@@ -55,7 +58,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            background-color: #222;
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 10px;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
         }
@@ -64,18 +67,20 @@
         #submenu button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #444;
+            background-color: #8A2BE2;
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 25px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
         }
 
         #submenu button:hover {
-            background-color: #666;
+            background-color: #00BFFF;
+            transform: scale(1.1);
         }
 
         /* Vista de reclamar puntos */
@@ -100,35 +105,40 @@
 
         /* Sección de Watch Video y Open Link */
         .seccion-reclamar {
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 15px;
             margin: 10px;
             width: 80%;
             max-width: 300px;
             text-align: center;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
         }
 
         .seccion-reclamar h2 {
             margin: 0 0 10px 0;
             font-size: 18px;
+            color: #00BFFF;
+            text-shadow: 0 0 10px #00BFFF;
         }
 
         .seccion-reclamar button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #444;
+            background-color: #8A2BE2;
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 25px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
         }
 
         .seccion-reclamar button:hover {
-            background-color: #666;
+            background-color: #00BFFF;
+            transform: scale(1.1);
         }
 
         .seccion-reclamar p {
@@ -139,42 +149,52 @@
 
         .seccion-reclamar .puntos-extra {
             font-size: 12px;
-            color: #0f0;
+            color: #00FF7F;
             margin-top: 5px;
+            text-shadow: 0 0 10px #00FF7F;
         }
 
         /* Estilos para Wallet */
         #wallet-info {
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 15px;
             margin: 10px;
             width: 80%;
             max-width: 300px;
             text-align: center;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
         }
 
         #wallet-info h2 {
             margin: 0 0 10px 0;
             font-size: 18px;
+            color: #00BFFF;
+            text-shadow: 0 0 10px #00BFFF;
         }
 
         #wallet-info button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #444;
+            background-color: #8A2BE2;
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 25px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: background-color 0.3s, transform 0.3s;
         }
 
         #wallet-info button:disabled {
             background-color: #777;
             cursor: not-allowed;
+        }
+
+        #wallet-info button:hover:not(:disabled) {
+            background-color: #00BFFF;
+            transform: scale(1.1);
         }
 
         #wallet-info p {
@@ -260,7 +280,6 @@
         function crearObjeto() {
             const objeto = document.createElement('div');
             objeto.className = 'objeto';
-            objeto.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
             objeto.style.left = `${Math.random() * (window.innerWidth - 50)}px`;
             objeto.style.top = `${Math.random() * (window.innerHeight - 150)}px`; // Ajuste para el submenú
 
@@ -310,9 +329,9 @@
             }
         }
 
-        // Función para abrir el link
+        // Función para abrir el link en una nueva pestaña
         function abrirLink() {
-            window.location.href = "https://whoushex.top/4/9120046";
+            window.open("https://whoushex.top/4/9120046", "_blank");
         }
 
         // Función para actualizar y guardar puntos
