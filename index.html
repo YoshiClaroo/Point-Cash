@@ -311,7 +311,7 @@
 
         // Función para mostrar un anuncio
         function mostrarAnuncio() {
-            show_9120716().then(() => {
+            show_9120716('pop').then(() => {
                 alert('¡Has visto un anuncio!');
                 puntos += 50; // Recompensar puntos por ver el anuncio
                 actualizarPuntos();
@@ -335,6 +335,10 @@
 
         // Función para abrir el anuncio (actualizada)
         function abrirLink() {
+            // Incrementar el contador al abrir el anuncio
+            linkCount += 1;
+            actualizarContadores(); // Actualizar contadores después de abrir el anuncio
+
             show_9120716('pop').then(() => {
                 alert('¡Has visto el anuncio desde Open Link!');
                 // Código para recompensar al usuario aquí, si es necesario
